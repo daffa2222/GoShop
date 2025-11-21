@@ -3,23 +3,27 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use App\Models\Store;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class StoreSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        // Ambil ID Seller A yang statusnya 'approved'
-        $sellerA = User::where('email', 'seller.a@mail.com')
-            ->where('seller_status', 'approved')
-            ->first();
+        // Ambil seller yang approved
+        $seller = User::where('role', 'seller')
+                      ->where('status', 'approved')
+                      ->first();
 
-        if ($sellerA) {
+        if ($seller) {
             Store::create([
-                'user_id' => $sellerA->id,
-                'name' => 'Gadget Store Seller A',
-                'description' => 'Toko khusus barang-barang elektronik.',
+                'user_id'    => $seller->id,
+                'name'       => 'Toko Elektronik Jaya',
+                'slug'       => Str::slug('Toko Elektronik Jaya'),
+                'description'=> 'Menyediakan berbagai produk elektronik berkualitas dengan harga terjangkau. Terpercaya sejak 2020.',
+                'logo'       => 'default-logo.png',
+                'banner'     => 'default-banner.jpg',
             ]);
         }
     }

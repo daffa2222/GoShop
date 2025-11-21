@@ -8,40 +8,50 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        // 1. Admin Utama
+        // Admin
         User::create([
-            'name' => 'Admin Utama',
-            'email' => 'admin@mail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Administrator',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin123'),
             'role' => 'admin',
+            'status' => 'approved',
         ]);
 
-        // 2. Seller Approved (siap punya toko & produk)
+        // Seller (Approved)
         User::create([
-            'name' => 'Seller A (Approved)',
-            'email' => 'seller.a@mail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Toko Elektronik Jaya',
+            'email' => 'penjual1@gmail.com',
+            'password' => Hash::make('penjual123'),
             'role' => 'seller',
-            'seller_status' => 'approved',
+            'status' => 'approved',
         ]);
 
-        // 3. Seller Pending (untuk testing menu verifikasi admin)
+        // Seller (Pending)
         User::create([
-            'name' => 'Seller B (Pending)',
-            'email' => 'seller.b@mail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Toko Fashion Keren',
+            'email' => 'penjual2@gmail.com',
+            'password' => Hash::make('penjual123'),
             'role' => 'seller',
-            'seller_status' => 'pending',
+            'status' => 'pending',
         ]);
 
-        // 4. Buyer Aktif (untuk testing Cart, Checkout, Order, Rating)
+        // Buyers
         User::create([
-            'name' => 'Buyer C',
-            'email' => 'buyer.c@mail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Budi Santoso',
+            'email' => 'budi@gmail.com',
+            'password' => Hash::make('pembeli123'),
             'role' => 'buyer',
+            'status' => 'approved',
+        ]);
+
+        User::create([
+            'name' => 'Siti Aminah',
+            'email' => 'siti@gmail.com',
+            'password' => Hash::make('pembeli123'),
+            'role' => 'buyer',
+            'status' => 'approved',
         ]);
     }
 }

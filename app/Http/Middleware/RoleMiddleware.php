@@ -16,15 +16,13 @@ class RoleMiddleware
 
         $user = auth()->user();
 
-        // Cek role
+        // Cek role: Jika role user tidak ada dalam daftar yang diizinkan
         if (!in_array($user->role, $roles)) {
             abort(403, 'Unauthorized access');
         }
 
-        // Khusus seller: cek status approved
-        if ($user->role === 'seller' && $user->status !== 'approved') {
-            return redirect()->route('seller.pending');
-        }
+        // TIDAK ADA LOGIKA CEK STATUS SELLER DI SINI. 
+        // Logika Status Seller akan dipindahkan ke SellerStatusMiddleware.
 
         return $next($request);
     }

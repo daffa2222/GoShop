@@ -1,33 +1,90 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Dashboard Admin
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-semibold mb-4">Selamat Datang, {{ Auth::user()->name }}!</h3>
-                    <p>Anda login sebagai <strong>Admin</strong>.</p>
-                    
-                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-blue-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-blue-800">Kelola Pengguna</h4>
-                            <p class="text-gray-600 text-sm">Kelola semua pengguna</p>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-green-800">Verifikasi Penjual</h4>
-                            <p class="text-gray-600 text-sm">Setujui/Tolak penjual</p>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-purple-800">Kategori</h4>
-                            <p class="text-gray-600 text-sm">Kelola kategori produk</p>
-                        </div>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        .welcome {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+        .card p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        button {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p class="welcome">Selamat Datang, <strong>{{ Auth::user()->name }}</strong>!</p>
+        <p class="welcome">Anda login sebagai <strong>Admin</strong>.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>📊 Manajemen User</h3>
+                <p>Kelola data pengguna (Admin, Seller, Buyer)</p>
+            </div>
+            <div class="card">
+                <h3>✅ Verifikasi Seller</h3>
+                <p>Review dan approve seller baru</p>
+            </div>
+            <div class="card">
+                <h3>📂 Manajemen Kategori</h3>
+                <p>Kelola kategori produk</p>
             </div>
         </div>
+        
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit">Logout</button>
+        </form>
     </div>
-</x-app-layout>
+</body>
+</html>

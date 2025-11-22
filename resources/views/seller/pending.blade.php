@@ -1,46 +1,99 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Verifikasi Penjual
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    @if($user->status === 'pending')
-                        <div class="text-center">
-                            <svg class="mx-auto h-12 w-12 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <h3 class="mt-2 text-lg font-medium text-gray-900">Akun Sedang Ditinjau</h3>
-                            <p class="mt-1 text-sm text-gray-500">
-                                Akun penjual Anda sedang ditinjau oleh tim admin kami.
-                                Mohon tunggu persetujuan.
-                            </p>
-                        </div>
-                    @elseif($user->status === 'rejected')
-                        <div class="text-center">
-                            <svg class="mx-auto h-12 w-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                            <h3 class="mt-2 text-lg font-medium text-gray-900">Pendaftaran Ditolak</h3>
-                            <p class="mt-1 text-sm text-gray-500">
-                                Maaf, pendaftaran penjual Anda ditolak.
-                            </p>
-                            <form method="POST" action="{{ route('seller.delete-account') }}" class="mt-4">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus akun?')">
-                                    Hapus Akun
-                                </button>
-                            </form>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verifikasi Penjual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .pending { color: #f59e0b; }
+        .rejected { color: #ef4444; }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        p {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #dc2626;
+        }
+        .logout-btn {
+            background-color: #6b7280;
+            margin-top: 15px;
+        }
+        .logout-btn:hover {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        @if($user->status === 'pending')
+            <div class="icon pending">⏱️</div>
+            <h1>Akun Sedang Ditinjau</h1>
+            <p>
+                Akun penjual Anda sedang ditinjau oleh tim admin kami.<br>
+                Mohon tunggu persetujuan.
+            </p>
+            <p><strong>Email:</strong> {{ $user->email }}</p>
+            
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+            
+        @elseif($user->status === 'rejected')
+            <div class="icon rejected">❌</div>
+            <h1>Pendaftaran Ditolak</h1>
+            <p>
+                Maaf, pendaftaran penjual Anda ditolak oleh admin.
+            </p>
+            
+            <form method="POST" action="{{ route('seller.delete-account') }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus akun?')">
+                    Hapus Akun
+                </button>
+            </form>
+            
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        @endif
     </div>
-</x-app-layout>
+</body>
+</html>
